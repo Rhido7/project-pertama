@@ -20,6 +20,13 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nama'     => 'required|min:3|max:100',
+            'kategori' => 'required|min:3|max:50',
+            'harga'    => 'required|numeric|min:0',
+            'stok'     => 'required|numeric|min:0',
+        ]);
+
         Produk::create($request->all());
         return redirect()->route('produk.index');
     }
@@ -31,7 +38,14 @@ class ProdukController extends Controller
 
     public function update(Request $request, Produk $produk)
     {
-        $produk->update($request->all());
+        $request->validate([
+         'nama'     => 'required|min:3|max:100',
+         'kategori' => 'required|min:3|max:50',
+         'harga'    => 'required|numeric|min:0',
+         'stok'     => 'required|numeric|min:0',
+        ]);
+
+         $produk->update($request->all());
         return redirect()->route('produk.index');
     }
 
