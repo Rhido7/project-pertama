@@ -9,5 +9,10 @@ class Produk extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'kategori', 'harga', 'stok'];
+    protected $fillable = ['nama', 'kategori_id', 'harga', 'stok'];
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
 }

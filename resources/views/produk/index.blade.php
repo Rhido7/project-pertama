@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ $i+1 }}</td>
                 <td>{{ $produk->nama }}</td>
-                <td>{{ $produk->kategori }}</td>
+                <td>{{ $produk->kategori->nama ?? '-' }}</td>
                 <td>Rp {{ number_format($produk->harga) }}</td>
                 <td>{{ $produk->stok }}</td>
                 <td>

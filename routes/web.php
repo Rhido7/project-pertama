@@ -31,4 +31,7 @@ Route::middleware('auth')->group(function () {
 use App\Http\Controllers\ProdukController;
 Route::resource('produk', ProdukController::class)->middleware('auth');
 
+use App\Http\Controllers\KategoriController;
+Route::resource('kategori', KategoriController::class)->middleware('auth');
+
 require __DIR__.'/auth.php';

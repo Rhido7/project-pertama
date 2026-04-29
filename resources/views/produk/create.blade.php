@@ -15,8 +15,15 @@
         </div>
         <div class="mb-3">
             <label>Kategori</label>
-            <input type="text" name="kategori" class="form-control @error('kategori') is-invalid @enderror" value="{{ old('kategori') }}">
-            @error('kategori') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            <select name="kategori_id" class="form-control @error('kategori_id') is-invalid @enderror">
+                <option value="">-- Pilih Kategori --</option>
+                @foreach($kategoris as $kategori)
+                <option value="{{ $kategori->id }}" {{ old('kategori_id') == $kategori->id ? 'selected' : '' }}>
+                    {{ $kategori->nama }}
+                </option>
+                @endforeach
+            </select>
+            @error('kategori_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="mb-3">
             <label>Harga</label>

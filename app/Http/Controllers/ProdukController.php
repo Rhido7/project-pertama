@@ -3,28 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
     public function index()
     {
-        $produks = Produk::all();
+        $produks = Produk::with('kategori')->get();
         return view('produk.index', compact('produks'));
     }
 
     public function create()
     {
-        return view('produk.create');
+        $kategoris = Kategori::all();
+        return view('produk.create', compact('kategoris'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama'     => 'required|min:3|max:100',
-            'kategori' => 'required|min:3|max:50',
-            'harga'    => 'required|numeric|min:0',
-            'stok'     => 'required|numeric|min:0',
+            'nama'        => 'required|min:3|max:100',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'harga'       => 'required|numeric|min:0',
+            'stok'        => 'required|numeric|min:0',
         ]);
 
         Produk::create($request->all());
@@ -33,19 +35,20 @@ class ProdukController extends Controller
 
     public function edit(Produk $produk)
     {
-        return view('produk.edit', compact('produk'));
+        $kategoris = Kategori::all();
+        return view('produk.edit', compact('produk', 'kategoris'));
     }
 
     public function update(Request $request, Produk $produk)
     {
         $request->validate([
-         'nama'     => 'required|min:3|max:100',
-         'kategori' => 'required|min:3|max:50',
-         'harga'    => 'required|numeric|min:0',
-         'stok'     => 'required|numeric|min:0',
+            'nama'        => 'required|min:3|max:100',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'harga'       => 'required|numeric|min:0',
+            'stok'        => 'required|numeric|min:0',
         ]);
 
-         $produk->update($request->all());
+        $produk->update($request->all());
         return redirect()->route('produk.index');
     }
 
