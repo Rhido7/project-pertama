@@ -36,6 +36,12 @@ Route::resource('kategori', KategoriController::class)->middleware('auth');
 Route::resource('transaksi', TransaksiController::class)->middleware('auth');
 
 Route::get('laporan', [TransaksiController::class, 'laporan'])->middleware('auth')->name('laporan');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::patch('users/{user}/role', [App\Http\Controllers\UserController::class, 'updateRole'])->name('users.updateRole');
+});
+
 Route::get('transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])->middleware('auth')->name('transaksi.struk');
 
 require __DIR__.'/auth.php';
