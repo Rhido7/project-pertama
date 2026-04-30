@@ -104,4 +104,39 @@ class TransaksiController extends Controller
         return view('transaksi.struk', compact('transaksi'));
     }
 
+    public function dashboard()
+    {
+        // Total keseluruhan
+        $total_transaksi = Transaksi::count();
+        $total_pendapatan = Transaksi::sum('total');
+        $total_produk = \App\Models\Produk::count();
+        $total_kategori = \App\Models\Kategori::count();
+
+        // Data grafik 7 hari terakhir
+        $grafik_labels = [];
+        $grafik_data = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $tanggal = now()->subDays($i);
+            $grafik_labels[] = $tanggal->format('d/m');
+            $grafik_data[] = Transaksi::whereDate('created_at', $tanggal)->sum('total');
+        }
+
+        // Transaksi terbaru
+        $transaksi_terbaru = Transaksi::with('user')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('dashboard', compact(
+            'total_transaksi',
+            'total_pendapatan',
+            'total_produk',
+            'total_kategori',
+            'grafik_labels',
+            'grafik_data',
+            'transaksi_terbaru'
+        ));
+    }
+
 }

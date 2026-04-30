@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [TransaksiController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,17 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-use App\Http\Controllers\ProdukController;
 Route::resource('produk', ProdukController::class)->middleware('auth');
-
-use App\Http\Controllers\KategoriController;
 Route::resource('kategori', KategoriController::class)->middleware('auth');
-
-use App\Http\Controllers\TransaksiController;
 Route::resource('transaksi', TransaksiController::class)->middleware('auth');
 
 Route::get('laporan', [TransaksiController::class, 'laporan'])->middleware('auth')->name('laporan');
-
 Route::get('transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])->middleware('auth')->name('transaksi.struk');
 
 require __DIR__.'/auth.php';
