@@ -39,4 +39,6 @@ Route::resource('transaksi', TransaksiController::class)->middleware('auth');
 
 Route::get('laporan', [TransaksiController::class, 'laporan'])->middleware('auth')->name('laporan');
 
+Route::get('transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])->middleware('auth')->name('transaksi.struk');
+
 require __DIR__.'/auth.php';

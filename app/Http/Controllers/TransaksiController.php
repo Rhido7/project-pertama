@@ -97,4 +97,11 @@ class TransaksiController extends Controller
             'tahun'
         ));
     }
+
+    public function struk(Transaksi $transaksi)
+    {
+        $transaksi->load('details.produk', 'user');
+        return view('transaksi.struk', compact('transaksi'));
+    }
+
 }

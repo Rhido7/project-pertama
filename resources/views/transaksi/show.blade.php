@@ -52,6 +52,7 @@
     </table>
 
     <a href="{{ route('transaksi.index') }}" class="btn btn-secondary">Kembali</a>
+    <a href="{{ route('transaksi.struk', $transaksi->id) }}" target="_blank" class="btn btn-warning">🖨️ Cetak Struk</a>
     <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Transaksi Baru</a>
 </body>
 </html>
