@@ -37,4 +37,6 @@ Route::resource('kategori', KategoriController::class)->middleware('auth');
 use App\Http\Controllers\TransaksiController;
 Route::resource('transaksi', TransaksiController::class)->middleware('auth');
 
+Route::get('laporan', [TransaksiController::class, 'laporan'])->middleware('auth')->name('laporan');
+
 require __DIR__.'/auth.php';

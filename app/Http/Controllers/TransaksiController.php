@@ -74,4 +74,27 @@ class TransaksiController extends Controller
         $transaksi->load('details.produk', 'user');
         return view('transaksi.show', compact('transaksi'));
     }
+
+    public function laporan(Request $request)
+    {
+        $bulan = $request->bulan ?? date('m');
+        $tahun = $request->tahun ?? date('Y');
+
+        $transaksis = Transaksi::with('details.produk', 'user')
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $total_pendapatan = $transaksis->sum('total');
+        $total_transaksi = $transaksis->count();
+
+        return view('transaksi.laporan', compact(
+            'transaksis',
+            'total_pendapatan',
+            'total_transaksi',
+            'bulan',
+            'tahun'
+        ));
+    }
 }
