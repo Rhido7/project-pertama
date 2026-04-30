@@ -34,4 +34,7 @@ Route::resource('produk', ProdukController::class)->middleware('auth');
 use App\Http\Controllers\KategoriController;
 Route::resource('kategori', KategoriController::class)->middleware('auth');
 
+use App\Http\Controllers\TransaksiController;
+Route::resource('transaksi', TransaksiController::class)->middleware('auth');
+
 require __DIR__.'/auth.php';
